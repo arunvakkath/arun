@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore professional projects by Anas — Portfolio Website, Weather App, To-Do List, and more." />
+  <title>Projects | Portfolio</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    nav {
+      background: #333;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    nav a:hover {
+      color: #00c9a7;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 50px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .project-list {
+      list-style: none;
+      padding: 0;
+    }
+    .project-item {
+      background: #f9f9f9;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .project-item a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .project-item a:hover {
+      color: #00c9a7;
+    }
+    .delete-btn {
+      background: #ff4d4f;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background: #d9363e;
+    }
+    form {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form button {
+      background: #00c9a7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #009f87;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="RA.html">Home</a>
+    <a href="home.html">About</a>
+    <a href="project.html">Project </a>
+        
+    <a href="DET.HTML">CONTACT</a>
+  </nav>
+
+  <header>
+    <h1>Welcome to My Portfolio</h1>
+    <p>Showcasing Projects That Blend Creativity and Code</p>
+  </header>
+
+  <main id="projects">
+    <h2>My Projects</h2>
+    <ul class="project-list" id="projectList">
+      <!-- Projects will be added here dynamically -->
+    </ul>
+
+    <form id="form1">
+      <input type="text" id="projectName" placeholder="Project Name" required />
+      <input type="url" id="projectURL" placeholder="Project URL" required />
+      <textarea id="projectDescription" placeholder="Project Description" required></textarea>
+      <button type="submit">Add Project</button>
+    </form>
+  </main>
+
+  <script>
+    
+    const projects = [
+      { name: "Portfolio Website", url: "https://link-to-project1.com", description: "A personal portfolio website to showcase my skills and projects." },
+      { name: "Weather App", url: "https://link-to-project2.com", description: "A weather application that fetches real-time data." },
+      { name: "To-Do List App", url: "https://link-to-project3.com", description: "A simple task manager to track daily activities." },
+      { name: "Blog Layout Template", url: "https://link-to-project4.com", description: "A responsive blog template for articles." },
+      { name: "Simple Calculator", url: "https://link-to-project5.com", description: "A basic calculator app for simple arithmetic." }
+    ];
+
+    const projectList = document.getElementById('projectList');
+
+    function renderProjects() {
+      projectList.innerHTML = '';
+      projects.forEach((project, index) => {
+        const li = document.createElement('li');
+        li.className = 'project-item';
+
+        const a = document.createElement('a');
+        a.href = project.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = project.name;
+
+        const description = document.createElement('p');
+        description.textContent = project.description;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = () => {
+          projects.splice(index, 1);
+          renderProjects();
+        };
+
+        li.appendChild(a);
+        li.appendChild(description);
+        li.appendChild(deleteBtn);
+        projectList.appendChild(li);
+      });
+    }
+
+    renderProjects();
+
+    document.getElementById('projectForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('projectName').value.trim();
+      const url = document.getElementById('projectURL').value.trim();
+      const description = document.getElementById('projectDescription').value.trim();
+
+      if (name && url && description) {
+        projects.push({ name, url, description });
+        renderProjects();
+        this.reset();
+      }
+    });
+  </script>
+<script>
+
+ //Form Submission (Handling User Input):
+
+         
+    document.getElementById('form1').addEventListener('submit', async function (e) {
+      e.preventDefault();
+ 
+      const name = document.getElementById('projectName').value;
+      const desc = document.getElementById('projectDescription').value;
+      const  url= document.getElementById('projectURL').value;
+      
+
+      const response = await fetch('/api/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, desc,url })
+      });
+      const data = await response.json();
+      alert(data.message || 'Project added!');
+    });
+    
+
+  async function loadProjects() {
+    const res = await fetch('/api/services');
+    const projects = await res.json();
+
+    const list = document.getElementById('projectList');
+    list.innerHTML = '';
+
+    projects.forEach(project => {
+      const item = document.createElement('li');
+      item.textContent = `${project.name} (${project.url}) ${project.description}`;
+      list.appendChild(item);
+    });
+  }
+
+  window.onload = loadProjects; // Auto-run when page loads
+
+    
+  </script>
+
+</body>
+</html>

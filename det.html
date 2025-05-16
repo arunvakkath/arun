@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        legend {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button[type="reset"] {
+            background-color: #f1cf0d;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .success-message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .submitted-details {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .submitted-details h3 {
+            margin-top: 0;
+        }
+        .error-message {
+            display: none;
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="contact-form">
+        <fieldset>
+            <legend>Contact Info</legend>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="details">Details:</label>
+            <textarea id="details" name="details" rows="4" required></textarea>
+
+            <label for="contact">Contact Info:</label>
+            <input type="email" id="contact" name="contact" required>
+
+            <button type="submit">Submit</button>
+            <button type="reset">Clear</button>
+        </fieldset>
+    </form>
+
+    <div class="success-message" id="success-message">
+        Your message has been submitted successfully!
+    </div>
+
+    <div class="error-message" id="error-message">
+        There was an error submitting your form. Please try again.
+    </div>
+
+    <div id="submitted-details" class="submitted-details" style="display: none;">
+        <h3>Submitted Details:</h3>
+        <p><strong>Name:</strong> <span id="submitted-name"></span></p>
+        <p><strong>Details:</strong> <span id="submitted-details-text"></span></p>
+        <p><strong>Contact Info:</strong> <span id="submitted-contact"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const details = document.getElementById('details').value;
+            const contact = document.getElementById('contact').value;
+
+            try {
+                // Send data to server
+                const response = await fetch('http://localhost:3000/api/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        details: details,
+                        contact: contact
+                    })
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('error-message').style.display = 'none';
+                    
+                    // Display submitted details
+                    document.getElementById('submitted-name').textContent = name;
+                    document.getElementById('submitted-details-text').textContent = details;
+                    document.getElementById('submitted-contact').textContent = contact;
+                    document.getElementById('submitted-details').style.display = 'block';
+
+                    // Reset form
+                    this.reset();
+
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('success-message').style.display = 'none';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('success-message').style.display = 'none';
+                    
+                    // Hide error message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('error-message').style.display = 'none';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('success-message').style.display = 'none';
+                
+                // Hide error message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('error-message').style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+    <a href="RA.html" style="position: fixed; top: 20px; right: 20px; padding: 10px 20px; background: hsl(206, 23%, 22%); color: white; text-decoration: none; border-radius: 5px;">← Back</a>
+</body>
+</html>

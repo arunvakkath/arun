@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Profile</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    p {
+      line-height: 1.6;
+    }
+
+    /* Back Button with Hover Effect */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: hsl(206, 23%, 22%);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .back-button:hover {
+      background: hsl(206, 23%, 32%);
+      transform: scale(1.05);
+    }
+
+    /* Section Styles with Fade-In Animation */
+    .section {
+      margin: 40px 0;
+      padding: 20px;
+      background: #f8f8f8;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Staggered Animation for Cards */
+    .card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Hover Effect for Titles */
+    h2, h3 {
+      transition: color 0.3s ease;
+    }
+    h2:hover, h3:hover {
+      color: #007bff;
+    }
+
+    /* Scroll Animation Trigger */
+    .scroll-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .scroll-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="RA.html" class="back-button">← Back</a>
+
+    <h1 style="text-align: center;">Professional Profile</h1>
+
+    <div class="section">
+      <h2>About Me</h2>
+      <p>Full-stack developer with 7+ years of experience specializing in JavaScript ecosystems. Expertise in React, Node.js, and cloud architectures. Passionate about building scalable solutions and mentoring developers.</p>
+    </div>
+
+    <div class="section scroll-section">
+      <h2>Professional Journey</h2>
+      <div class="card" style="margin: 20px 0; padding: 15px; background: white;">
+        <h3>Lead Developer at TechInnovate (2019-Present)</h3>
+        <ul style="padding-left: 20px;">
+          <li>Architected microservices platform handling 2M+ daily transactions</li>
+          <li>Led 12-person cross-functional Agile team</li>
+          <li>Implemented CI/CD pipelines reducing deployment time by 40%</li>
+        </ul>
+      </div>
+      <div class="card" style="margin: 20px 0; padding: 15px; background: white;">
+        <h3>Senior Developer at DigitalSolutions (2016-2019)</h3>
+        <ul style="padding-left: 20px;">
+          <li>Developed award-winning healthcare SaaS products</li>
+          <li>Optimized database queries improving API response by 65%</li>
+          <li>Introduced comprehensive testing frameworks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section scroll-section">
+      <h2>Key Achievements</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>Google Developer Expert</h3>
+          <p>Cloud Technologies, 2022</p>
+        </div>
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>AWS Certified</h3>
+          <p>Solutions Architect - Professional</p>
+        </div>
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>Global Hackathon 2021</h3>
+          <p>1st Place (AI/ML Category)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section scroll-section">
+      <h2>Development Philosophy</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>User-Centric Design</h3>
+          <p>Technology should solve real problems with intuitive interfaces</p>
+        </div>
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>Sustainable Code</h3>
+          <p>Emphasize maintainability and clean architecture</p>
+        </div>
+        <div class="card" style="flex: 1; min-width: 250px; padding: 15px; background: white;">
+          <h3>Ethical Practice</h3>
+          <p>Data privacy and security as fundamental rights</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for Scroll Animations -->
+  <script>
+    const sections = document.querySelectorAll('.scroll-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

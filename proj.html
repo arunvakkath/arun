@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore professional projects by Anas — Portfolio Website, Weather App, To-Do List, and more." />
+  <title>Projects | Portfolio</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    nav {
+      background: #333;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    nav a:hover {
+      color: #00c9a7;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 50px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .project-list {
+      list-style: none;
+      padding: 0;
+    }
+    .project-item {
+      background: #f9f9f9;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .project-item a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .project-item a:hover {
+      color: #00c9a7;
+    }
+    form {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form button {
+      background: #00c9a7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #009f87;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="RA.html">Home</a>
+    <a href="home.html">About</a>
+    <a href="proj.html">Project</a>
+    <a href="DET.HTML">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Welcome to My Portfolio</h1>
+    <p>Showcasing Projects That Blend Creativity and Code</p>
+  </header>
+
+  <main id="projects">
+    <h2>My Projects</h2>
+    <ul class="project-list" id="projectList">
+      <!-- Projects will be added here dynamically -->
+    </ul>
+
+    <form id="form1">
+      <input type="text" id="projectName" placeholder="Project Name" required />
+      <input type="url" id="projectURL" placeholder="Project URL" required />
+      <textarea id="projectDescription" placeholder="Project Description" required></textarea>
+      <button type="submit">Add Project</button>
+    </form>
+  </main>
+
+  <script>
+    // Handle form submission
+    document.getElementById('form1').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('projectName').value.trim();
+      const status = document.getElementById('projectDescription').value.trim();
+      const link = document.getElementById('projectURL').value.trim();
+
+      if (!name || !status || !link) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/services', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, status, link })
+        });
+
+        const data = await response.json();
+        alert(data.message || 'Project added!');
+        loadProjects();
+        this.reset();
+      } catch (error) {
+        alert('Failed to add project.');n
+      }
+    });
+
+    // Load projects on page load
+    async function loadProjects() {
+      try {
+        const res = await fetch('/api/services');
+        const projects = await res.json();
+
+        const list = document.getElementById('projectList');
+        list.innerHTML = '';
+
+        projects.forEach(project => {
+          const item = document.createElement('li');
+          item.className = 'project-item';
+          item.innerHTML = `
+            <div>
+              <a href="${project.link}" target="_blank">${project.name}</a>
+              <p>${project.status}</p>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      } catch (error) {
+        console.error('Error loading projects:', error);
+      }
+    }
+
+    window.onload = loadProjects;
+  </script>
+
+</body>
+</html>

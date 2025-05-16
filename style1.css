@@ -1,0 +1,9 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: url('file:///C:/Users/user/Pictures/Saved%20Pictures/images%20(1).jfif') no-repeat center center fixed;
+  background-size: cover;
+}
